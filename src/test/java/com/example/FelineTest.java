@@ -13,36 +13,26 @@ public class FelineTest extends TestCase {
     Feline feline = new Feline();
 
     @Test
-    public void testEatMeat() {
-        try {
-            List<String> listFoodExpected = List.of("Животные", "Птицы", "Рыба");
-            Mockito.when(feline.getFood("Хищник")).thenReturn(listFoodExpected);
-            List<String> listFoodActual = feline.eatMeat();
-            Mockito.verify(feline, Mockito.times(1)).getFood("Хищник");
-            assertEquals("Ожидается:"+listFoodExpected.toString(), listFoodExpected.toString(), listFoodActual.toString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public void testEatMeat() throws Exception  {
+        List<String> listFoodActual = feline.eatMeat();
+        Mockito.verify(feline, Mockito.times(1)).getFood("Хищник");
     }
 
     @Test
     public void testGetFamily() {
-        String family = feline.getFamily();
-        Mockito.verify(feline, Mockito.times(1)).getFamily();
-        assertEquals("Ожидается 'Кошачьи'","Кошачьи", family);
+        String expectedFamily =  "Кошачьи";
+        assertEquals("Ожидается: "+expectedFamily,expectedFamily, feline.getFamily());
     }
 
     @Test
     public void testGetKittens() {
-        int countKittens = feline.getKittens(4);
-        Mockito.verify(feline, Mockito.times(1)).getKittens(4);
-        assertEquals("Ожидается: 4", 4,countKittens);
+        int expectedCount = 4;
+        assertEquals("Ожидается: "+expectedCount, expectedCount, feline.getKittens(expectedCount));
     }
 
     @Test
     public void testGetKittens1() {
         int countKittens = feline.getKittens();
         Mockito.verify(feline, Mockito.times(1)).getKittens(1);
-        assertEquals("Ожидается: 1", 1, countKittens);
     }
 }

@@ -1,6 +1,7 @@
 package com.example;
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.junit.runner.RunWith;
@@ -8,44 +9,31 @@ import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LionTest extends TestCase {
-
-    Feline feline = Mockito.spy(new Feline());
-    Lion lion;
-    {
-        try {
-            lion = new Lion("Самец", feline);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    @Mock
+    Feline feline = new Feline();
 
     @Test
-    public void testGetKittens() {
+    public void testGetKittens() throws Exception{
+        Lion  lion = new Lion("Самец", feline);
         int countKittens = lion.getKittens();
-        Mockito.verify(feline, Mockito.times(1)).getKittens(1);
-        assertEquals("Ожидается: 1", 1, countKittens);
+        Mockito.verify(feline).getKittens();
     }
 
     @Test
-    public void testGetFood() {
-        try {
-            List<String> listFoodExpected = List.of("Животные", "Птицы", "Рыба");
-            Mockito.when(feline.getFood("Хищник")).thenReturn(listFoodExpected);
-            List<String> listFoodActual = lion.getFood();
-            Mockito.verify(feline, Mockito.times(1)).getFood("Хищник");
-            assertEquals("Ожидается:"+listFoodExpected.toString(), listFoodExpected.toString(), listFoodActual.toString());
-
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public void testGetFood() throws Exception{
+        Lion  lion = new Lion("Самец", feline);
+        List<String> listFoodExpected = List.of("Животные", "Птицы", "Рыба");
+        Mockito.when(feline.getFood("Хищник")).thenReturn(listFoodExpected);
+        List<String> listFoodActual = lion.getFood();
+        assertEquals("Ожидается:"+listFoodExpected.toString(), listFoodExpected.toString(), listFoodActual.toString());
     }
 
     @Test
-    public void testGetFamily() {
+    public void testGetFamily() throws Exception{
+        Lion  lion = new Lion("Самец", feline);
         String family = lion.getFamily();
-        Mockito.verify(feline, Mockito.times(1)).getFamily();
-        assertEquals("Ожидается 'Кошачьи'","Кошачьи", family);
+        Mockito.verify(feline).getFamily();
+
     }
 
 

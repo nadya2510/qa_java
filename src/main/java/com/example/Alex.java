@@ -2,7 +2,6 @@ package com.example;
 import java.util.List;
 
 public class Alex extends Lion {
-    Predator predator;
 
     public Alex(Feline feline) throws Exception {
        super("Самец", feline);
